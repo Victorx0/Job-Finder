@@ -2,18 +2,18 @@
 import { use, useState } from "react"
 
 
-export default function Sign_up(){
+export default function Login(){
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
 
     const handleSubmit = () => {
-
+        
     }
 
     return (
         <div className="flex items-center justify-center flex-1">
             <form onSubmit={handleSubmit} className="gap-5 border-2 p-10 rounded-lg">
-                <div>Sign Up</div>
+                <div>Login</div>
                 <label className="block">
                     <div>Username</div>
                     <input type="text" value={username} onChange={(e) => {setUsername(e.target.value)}} className="border-2 rounded-md"/>

@@ -13,10 +13,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="en"
       className={`h-full`}
     >
-      <body className="min-h-full flex flex-col px-5">
+      <body className="min-h-screen flex flex-col px-5">
         <NavBar/>
-        {children}
-        </body>
+        <main className="flex-1 flex">{children}</main>
+      </body>
     </html>
   );
 }

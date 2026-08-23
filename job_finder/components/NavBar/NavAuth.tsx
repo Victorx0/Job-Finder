@@ -1,5 +1,6 @@
 "use client"
 import { useState } from "react"
+import Link from "next/link"
 
 export default function NavAuth(){
     const [isAuth, setAuth] = useState(false)
@@ -7,9 +8,9 @@ export default function NavAuth(){
         <div>
             {
             !isAuth &&
-            <div>
-                <div>Sign Up</div>
-                <div>Login</div>
+            <div className="flex gap-5">
+                <Link href="./sign_up">Sign Up</Link>
+                <Link href="./login">Login</Link>
             </div>
             }
 
