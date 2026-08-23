@@ -1,12 +1,33 @@
 "use client"
-import { use, useState } from "react"
-
+import {useState } from "react"
+import { supabaseDBClient } from "@/components/Supabase/SupabaseClient"
+import { useRouter } from "next/navigation"
 
 export default function Login(){
-    const [username, setUsername] = useState("")
+    const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
+    const [sent, setSent] = useState(false)
 
-    const handleSubmit = () => {
+    const supabaseClient = supabaseDBClient
+
+    const router = useRouter()
+
+    const handleSubmit = async (e : React.FormEvent) => {
+        if(!sent){
+            e.preventDefault()
+            const {data, error} = await supabaseClient.auth.signInWithPassword({
+                email: email,
+                password: password,
+            })
+
+            setSent(true)
+            if (error) {
+                console.log(error.message)
+            } else {
+                router.push("./")
+            }
+
+        }
         
     }
 
@@ -15,8 +36,8 @@ export default function Login(){
             <form onSubmit={handleSubmit} className="gap-5 border-2 p-10 rounded-lg">
                 <div>Login</div>
                 <label className="block">
-                    <div>Username</div>
-                    <input type="text" value={username} onChange={(e) => {setUsername(e.target.value)}} className="border-2 rounded-md"/>
+                    <div>Email</div>
+                    <input type="text" value={email} onChange={(e) => {setEmail(e.target.value)}} className="border-2 rounded-md"/>
                 </label>
                 <label className="block">
                     <div>Password</div>
