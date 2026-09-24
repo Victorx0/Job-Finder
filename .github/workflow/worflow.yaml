@@ -1,0 +1,20 @@
+name: My First Action
+
+# Triggers: Runs on push to main OR manually via GitHub UI
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  greet:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository code
+        uses: actions/checkout@v4
+
+      - name: Run a simple script
+        run: |
+          echo "Hello from GitHub Actions!"
+          node -v

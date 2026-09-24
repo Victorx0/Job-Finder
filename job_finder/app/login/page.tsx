@@ -14,17 +14,17 @@ export default function Login(){
 
     const handleSubmit = async (e : React.FormEvent) => {
         if(!sent){
+            setSent(true)
             e.preventDefault()
             const {data, error} = await supabaseClient.auth.signInWithPassword({
                 email: email,
                 password: password,
             })
-
-            setSent(true)
+            console.log(data)
             if (error) {
                 console.log(error.message)
             } else {
-                router.push("./")
+                router.push("/")
             }
 
         }
@@ -37,11 +37,17 @@ export default function Login(){
                 <div>Login</div>
                 <label className="block">
                     <div>Email</div>
-                    <input type="text" value={email} onChange={(e) => {setEmail(e.target.value)}} className="border-2 rounded-md"/>
+                    <input type="text" value={email} onChange={(e) => {
+                        setEmail(e.target.value);
+                        setSent(false)
+                    }} className="border-2 rounded-md"/>
                 </label>
                 <label className="block">
                     <div>Password</div>
-                    <input type="password" value={password} onChange={(e) => {setPassword(e.target.value)}} className="border-2 rounded-md"/>
+                    <input type="password" value={password} onChange={(e) => {
+                        setPassword(e.target.value);
+                        setSent(false)
+                        }} className="border-2 rounded-md"/>
                 </label>
                 <input type="submit" value="Submit"/>
             </form>

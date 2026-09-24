@@ -9,24 +9,25 @@ export default function Sign_up(){
     const [sent, setSent] = useState(false)
     const [message, setMessage] = useState("")
 
-
     const supabaseClient = supabaseDBClient
 
     const handleSubmit = async (e : React.FormEvent) => {
-        if(!sent){
-            e.preventDefault()
-            const {data, error} = await supabaseClient.auth.signUp({
-                email: email,
-                password: password,
-            })
-
-            setSent(true)
-            if (error) {
-                setMessage(error.message)
-            } else {
-                setMessage("Account Created!")
-            }
+        if(sent){
+            return
         }
+        e.preventDefault()
+        setSent(true)
+        const {data, error} = await supabaseClient.auth.signUp({
+            email: email,
+            password: password,
+        })
+
+        if (error) {
+            setMessage(error.message)
+        } else {
+            setMessage("Account Created! A verification link has been sent to your email")
+        }
+
     }
 
     return (
@@ -35,11 +36,17 @@ export default function Sign_up(){
                 <div>Sign Up</div>
                 <label className="block">
                     <div>Email</div>
-                    <input type="text" value={email} onChange={(e) => {setEmail(e.target.value)}} className="border-2 rounded-md"/>
+                    <input type="text" value={email} onChange={(e) => {
+                        setEmail(e.target.value);
+                        setSent(false)
+                        }} className="border-2 rounded-md"/>
                 </label>
                 <label className="block">
                     <div>Password</div>
-                    <input type="password" value={password} onChange={(e) => {setPassword(e.target.value)}} className="border-2 rounded-md"/>
+                    <input type="password" value={password} onChange={(e) => {
+                        setPassword(e.target.value);
+                        setSent(false)
+                        }} className="border-2 rounded-md"/>
                 </label>
                 <input type="submit" value="Submit"/>
                 {
